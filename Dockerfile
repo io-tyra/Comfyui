@@ -1,11 +1,11 @@
 # Usa la imagen base oficial de ComfyUI de RunPod.
 FROM runpod/worker-comfyui:5.4.1-base
 
-# Actualiza la lista de paquetes con permisos de superusuario
-RUN sudo apt-get update
+# Cambia al usuario 'root' para obtener los permisos necesarios.
+USER root
 
-# Instala las dependencias necesarias en un solo comando
-RUN sudo apt-get install -y git zip unzip rar nvidia-cuda-toolkit
+# Instala las dependencias necesarias.
+RUN apt-get update && apt-get install -y git zip unzip rar nvidia-cuda-toolkit
 
 # --- Nodos personalizados ---
 RUN git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git /workspace/ComfyUI/custom_nodes/ComfyUI-mxToolkit
