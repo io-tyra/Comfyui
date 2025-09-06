@@ -25,9 +25,8 @@ RUN comfy model download --url https://civitai.com/api/download/models/87153 --r
 RUN comfy model download --url https://civitai.com/api/download/models/87191 --relative-path models/loras/SD15 --filename 87191.safetensors
 RUN comfy model download --url https://huggingface.co/guoyww/animatediff/resolve/main/v3_sd15_adapter.ckpt --relative-path models/loras/SD15 --filename v3_sd15_adapter.ckpt
 RUN comfy model download --url https://civitai.com/api/download/models/571916 --relative-path models/loras/SD15 --filename 571916.safetensors
-# Las siguientes líneas NO funcionarán con los enlaces de Google Drive
-# RUN comfy model download --url https://drive.google.com/file/d/1_gqfPU2JQ5Y-qLicBOdYD84tf8L4AaO4/view --relative-path models/loras/SD15 --filename emma15.safetensors
-# RUN comfy model download --url https://drive.google.com/file/d/1C1h_bUTkUMzEhn5N_IerdYPWxJsQfZiz/view --relative-path models/loras/SD15 --filename tyrana20.safetensors
+RUN comfy model download --url https://huggingface.co/datasets/x0io0x/EOR/resolve/main/emma15.safetensors --relative-path models/loras/SD15/Emma --filename emma15.safetensors
+RUN comfy model download --url https://huggingface.co/datasets/x0io0x/EOR/resolve/main/tyrana20.safetensors --relative-path models/loras/SD15/tyrana2 --filename tyrana20.safetensors
 
 # Animatediff Motion Model
 RUN comfy model download --url https://huggingface.co/guoyww/animatediff/resolve/main/mm_sd_v15_v2.ckpt --relative-path models/animatediff_models --filename mm_sd_v15_v2.ckpt
@@ -37,6 +36,5 @@ RUN comfy model download --url https://huggingface.co/guoyww/animatediff/resolve
 RUN comfy model download --url https://civitai.com/api/download/models/529725 --relative-path models/animatediff_motion_lora --filename 529725.safetensors
 RUN comfy model download --url https://civitai.com/api/download/models/671139 --relative-path models/animatediff_motion_lora --filename 671139.safetensors
 
-# Archivo de audio (no se descarga en el Dockerfile)
-# No se puede descargar ni incluir el archivo de audio con un Dockerfile.
-# RUN comfy model download --url https://drive.google.com/file/d/15ucr-NP_0WMZvV3A0RJxqMphHQBsI3g2/view --relative-path models/audio --filename EyeOnTheRoad.wav
+# Archivo de audio (se descarga en la carpeta input)
+RUN comfy model download --url https://huggingface.co/datasets/x0io0x/EOR/resolve/main/Eye%20On%20The%20Road.wav --relative-path input --filename EyeOnTheRoad.wav
