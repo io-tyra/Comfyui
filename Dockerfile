@@ -1,30 +1,42 @@
-# Usa la imagen base oficial y verificada de ComfyUI de RunPod.
+# Usa la imagen base oficial de ComfyUI de RunPod.
 FROM runpod/worker-comfyui:5.4.1-base
 
-# Instala el kit de desarrollo de CUDA para compilar los nodos.
+# Instala las dependencias necesarias.
 RUN apt-get update && apt-get install -y git zip unzip rar ttf-dejavu cuda-toolkit-12-2
 
-# Clona e instala ComfyUI-mxToolkit
+# --- Nodos personalizados ---
 RUN git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git /workspace/ComfyUI/custom_nodes/ComfyUI-mxToolkit
+RUN git clone https://github.com/thu-ml/SageAttention.git && cd /SageAttention && pip install .
+RUN git clone https://github.com/Yarvix/ComfyUI-YarvixPA.git /workspace/ComfyUI/custom_nodes/ComfyUI-YarvixPA && pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI-YarvixPA/requirements.txt
+RUN git clone https://github.com/WASasquatch/was-node-suite-comfyui.git /workspace/ComfyUI/custom_nodes/was-node-suite-comfyui && pip install -r /workspace/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
+RUN git clone https://github.com/diogod/ComfyUI_ChatterBox_SRT_Voice.git /workspace/ComfyUI/custom_nodes/ComfyUI_ChatterBox_SRT_Voice && pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI_ChatterBox_SRT_Voice/requirements.txt
+RUN git clone https://github.com/Zehong-Ma/ComfyUI-MagCache.git /workspace/ComfyUI/custom_nodes/ComfyUI-MagCache && pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI-MagCache/requirements.txt
+RUN git clone https://github.com/Academiasd/comfyui_AcademiaSD.git /workspace/ComfyUI/custom_nodes/comfyui_AcademiaSD && pip install -r /workspace/ComfyUI/custom_nodes/comfyui_AcademiaSD/requirements.txt
 
-# Clona el repositorio de SageAttention y lo instala
-RUN git clone https://github.com/thu-ml/SageAttention.git
-WORKDIR /SageAttention
-RUN pip install .
+# --- Modelos y LoRAs ---
+# Checkpoints SD15
+RUN comfy model download --url https://civitai.com/api/download/models/503725 --relative-path models/checkpoints/SD15 --filename 503725.safetensors
+RUN comfy model download --url https://civitai.com/api/download/models/237459 --relative-path models/checkpoints/SD15 --filename 237459.safetensors
+RUN comfy model download --url https://civitai.com/api/download/models/173821 --relative-path models/checkpoints/SD15 --filename 173821.safetensors
 
-# Navega al directorio de nodos personalizados de ComfyUI
-WORKDIR /workspace/ComfyUI/custom_nodes
+# LoRAs SD15
+RUN comfy model download --url https://civitai.com/api/download/models/175276 --relative-path models/loras/SD15 --filename 175276.safetensors
+RUN comfy model download --url https://civitai.com/api/download/models/87153 --relative-path models/loras/SD15 --filename 87153.safetensors
+RUN comfy model download --url https://civitai.com/api/download/models/87191 --relative-path models/loras/SD15 --filename 87191.safetensors
+RUN comfy model download --url https://huggingface.co/guoyww/animatediff/resolve/main/v3_sd15_adapter.ckpt --relative-path models/loras/SD15 --filename v3_sd15_adapter.ckpt
+RUN comfy model download --url https://civitai.com/api/download/models/571916 --relative-path models/loras/SD15 --filename 571916.safetensors
+# Las siguientes líneas NO funcionarán con los enlaces de Google Drive
+# RUN comfy model download --url https://drive.google.com/file/d/1_gqfPU2JQ5Y-qLicBOdYD84tf8L4AaO4/view --relative-path models/loras/SD15 --filename emma15.safetensors
+# RUN comfy model download --url https://drive.google.com/file/d/1C1h_bUTkUMzEhn5N_IerdYPWxJsQfZiz/view --relative-path models/loras/SD15 --filename tyrana20.safetensors
 
-# Clona y navega a los directorios de los otros nodos personalizados
-RUN git clone https://github.com/Yarvix/ComfyUI-YarvixPA.git && \
-    git clone https://github.com/WASasquatch/was-node-suite-comfyui.git && \
-    git clone https://github.com/diogod/ComfyUI_ChatterBox_SRT_Voice.git && \
-    git clone https://github.com/Zehong-Ma/ComfyUI-MagCache.git && \
-    git clone https://github.com/Academiasd/comfyui_AcademiaSD.git
+# Animatediff Motion Model
+RUN comfy model download --url https://huggingface.co/guoyww/animatediff/resolve/main/mm_sd_v15_v2.ckpt --relative-path models/animatediff_models --filename mm_sd_v15_v2.ckpt
 
-# Instala las dependencias de Python para cada nodo.
-RUN pip install -r ComfyUI-YarvixPA/requirements.txt && \
-    pip install -r was-node-suite-comfyui/requirements.txt && \
-    pip install -r ComfyUI_ChatterBox_SRT_Voice/requirements.txt && \
-    pip install -r ComfyUI-MagCache/requirements.txt && \
-    pip install -r comfyui_AcademiaSD/requirements.txt
+# Motion LoRAs
+RUN comfy model download --url https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_ZoomIn.ckpt --relative-path models/animatediff_motion_lora --filename v2_lora_ZoomIn.ckpt
+RUN comfy model download --url https://civitai.com/api/download/models/529725 --relative-path models/animatediff_motion_lora --filename 529725.safetensors
+RUN comfy model download --url https://civitai.com/api/download/models/671139 --relative-path models/animatediff_motion_lora --filename 671139.safetensors
+
+# Archivo de audio (no se descarga en el Dockerfile)
+# No se puede descargar ni incluir el archivo de audio con un Dockerfile.
+# RUN comfy model download --url https://drive.google.com/file/d/15ucr-NP_0WMZvV3A0RJxqMphHQBsI3g2/view --relative-path models/audio --filename EyeOnTheRoad.wav
