@@ -1,8 +1,11 @@
 # Usa la imagen base oficial de ComfyUI de RunPod.
 FROM runpod/worker-comfyui:5.4.1-base
 
-# Instala las dependencias necesarias.
-RUN apt-get update && apt-get install -y git zip unzip rar nvidia-cuda-toolkit
+# Asegúrate de que apt-get esté actualizado e instala git primero.
+RUN apt-get update && apt-get install -y git
+
+# Ahora instala las demás dependencias necesarias.
+RUN apt-get install -y zip unzip rar nvidia-cuda-toolkit
 
 # --- Nodos personalizados ---
 RUN git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git /workspace/ComfyUI/custom_nodes/ComfyUI-mxToolkit
@@ -38,4 +41,3 @@ RUN comfy model download --url https://civitai.com/api/download/models/671139 --
 
 # Archivo de audio (se descarga en la carpeta input)
 RUN comfy model download --url https://huggingface.co/datasets/x0io0x/EOR/resolve/main/Eye%20On%20The%20Road.wav --relative-path input --filename EyeOnTheRoad.wav
-
