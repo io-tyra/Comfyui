@@ -19,9 +19,11 @@ ENV GIT_TERMINAL_PROMPT=0
 # Switch to the custom_nodes directory
 WORKDIR /app/ComfyUI/custom_nodes
 
-# Clone required custom nodes repositories individually for better error handling and caching
+# Clone required custom nodes repositories individually
 RUN git clone https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved.git
-RUN git clone https://github.com/yolain/comfyui_yvann_nodes.git
+# ---- URL CORREGIDA ----
+RUN git clone https://github.com/yvann-ba/ComfyUI_Yvann-Nodes.git
+# -----------------------
 RUN git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
 RUN git clone https://github.com/FizzleDorf/ComfyUI_FizzNodes.git
 RUN git clone https://github.com/rgthree/rgthree-comfy.git
@@ -46,17 +48,17 @@ RUN mkdir -p /app/ComfyUI/input && \
 
 # Checkpoints
 RUN mkdir -p /app/ComfyUI/models/checkpoints/SD15 && \
-    wget -O /app/ComfyUI/models/checkpoints/SD15/model1.safetensors "https://civitai.com/api/download/models/503725?type=Model&format=SafeTensor&size=pruned&fp=fp16" && \
-    wget -O /app/ComfyUI/models/checkpoints/SD15/model2.safetensors "https://civitai.com/api/download/models/237459?type=Model&format=SafeTensor&size=pruned&fp=fp16" && \
-    wget -O /app/ComfyUI/models/checkpoints/SD15/model3.safetensors "https://civitai.com/api/download/models/173821?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+    wget -O /app/ComfyUI/models/checkpoints/SD15/realisticVision.safetensors "https://civitai.com/api/download/models/503725?type=Model&format=SafeTensor&size=pruned&fp=fp16" && \
+    wget -O /app/ComfyUI/models/checkpoints/SD15/dreamshaper.safetensors "https://civitai.com/api/download/models/237459?type=Model&format=SafeTensor&size=pruned&fp=fp16" && \
+    wget -O /app/ComfyUI/models/checkpoints/SD15/juggernaut.safetensors "https://civitai.com/api/download/models/173821?type=Model&format=SafeTensor&size=pruned&fp=fp16"
 
 # LoRAs
 RUN mkdir -p /app/ComfyUI/models/loras/SD15 && \
-    wget -O /app/ComfyUI/models/loras/SD15/lora1.safetensors "https://civitai.com/api/download/models/175276?type=Model&format=SafeTensor" && \
-    wget -O /app/ComfyUI/models/loras/SD15/lora2.safetensors "https://civitai.com/api/download/models/87153?type=Model&format=SafeTensor" && \
-    wget -O /app/ComfyUI/models/loras/SD15/lora3.safetensors "https://civitai.com/api/download/models/87191?type=Model&format=SafeTensor" && \
+    wget -O /app/ComfyUI/models/loras/SD15/epiNoiseoffset.safetensors "https://civitai.com/api/download/models/175276?type=Model&format=SafeTensor" && \
+    wget -O /app/ComfyUI/models/loras/SD15/add-detail.safetensors "https://civitai.com/api/download/models/87153?type=Model&format=SafeTensor" && \
+    wget -O /app/ComfyUI/models/loras/SD15/xl-more-art.safetensors "https://civitai.com/api/download/models/87191?type=Model&format=SafeTensor" && \
     wget -O /app/ComfyUI/models/loras/SD15/v3_sd15_adapter.ckpt "https://huggingface.co/guoyww/animatediff/resolve/main/v3_sd15_adapter.ckpt" && \
-    wget -O /app/ComfyUI/models/loras/SD15/lora4.safetensors "https://civitai.com/api/download/models/571916?type=Model&format=SafeTensor" && \
+    wget -O /app/ComfyUI/models/loras/SD15/DetailTweaker.safetensors "https://civitai.com/api/download/models/571916?type=Model&format=SafeTensor" && \
     wget -O /app/ComfyUI/models/loras/SD15/emma15.safetensors "https://huggingface.co/datasets/x0io0x/EOR/resolve/main/emma15.safetensors" && \
     wget -O /app/ComfyUI/models/loras/SD15/tyrana20.safetensors "https://huggingface.co/datasets/x0io0x/EOR/resolve/main/tyrana20.safetensors"
 
@@ -67,8 +69,8 @@ RUN mkdir -p /app/ComfyUI/models/animatediff_models && \
 # Motion LoRA
 RUN mkdir -p /app/ComfyUI/models/motion_lora && \
     wget -O /app/ComfyUI/models/motion_lora/v2_lora_ZoomIn.ckpt "https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_ZoomIn.ckpt" && \
-    wget -O /app/ComfyUI/models/motion_lora/motion_lora1.safetensors "https://civitai.com/api/download/models/529725?type=Model&format=SafeTensor" && \
-    wget -O /app/ComfyUI/models/motion_lora/motion_lora2.safetensors "https://civitai.com/api/download/models/671139?type=Model&format=SafeTensor"
+    wget -O /app/ComfyUI/models/motion_lora/CameraControl.safetensors "https://civitai.com/api/download/models/529725?type=Model&format=SafeTensor" && \
+    wget -O /app/ComfyUI/models/motion_lora/PanLeft.safetensors "https://civitai.com/api/download/models/671139?type=Model&format=SafeTensor"
 
 # RIFE Models for Frame Interpolation
 RUN mkdir -p /app/ComfyUI/models/rife && \
