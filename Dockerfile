@@ -4,8 +4,21 @@ FROM runpod/worker-comfyui:5.4.1-base
 # Cambia al usuario 'root' para obtener los permisos necesarios.
 USER root
 
-# Instala las dependencias necesarias.
-RUN apt-get update && apt-get install -y git zip unzip rar nvidia-cuda-toolkit
+# Instala las dependencias necesarias, incluyendo las bibliotecas de desarrollo de CUDA.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    zip \
+    unzip \
+    rar \
+    libnvinfer-dev \
+    libnccl-dev \
+    libnv-compute-dev \
+    libcublas-dev \
+    libcusparse-dev \
+    libcufft-dev \
+    libcurand-dev \
+    libnpp-dev \
+    cuda-toolkit-12-2
 
 # Agrega la ruta de binarios de CUDA al PATH para que 'nvcc' se encuentre.
 ENV PATH="/usr/local/cuda/bin:${PATH}"
