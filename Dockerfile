@@ -5,7 +5,7 @@ FROM runpod/worker-comfyui:5.4.1-base
 USER root
 
 # Instala las dependencias necesarias.
-RUN apt-get update && apt-get install -y git zip unzip rar nvidia-cuda-toolkit
+RUN apt-get update && apt-get install -y git zip unzip rar
 
 # --- Nodos personalizados ---
 RUN git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git /workspace/ComfyUI/custom_nodes/ComfyUI-mxToolkit
