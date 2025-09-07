@@ -1,14 +1,23 @@
 # Usa la imagen base oficial de ComfyUI de RunPod.
 FROM runpod/worker-comfyui:5.4.1-base
 
-# Instalar dependencias del sistema
+# Cambia al usuario 'root' para obtener los permisos necesarios.
+USER root
+
+# Instala los repositorios y las dependencias de NVIDIA.
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release \
     git \
     zip \
     unzip \
     rar \
-    wget \
-    curl \
+    wget
+RUN curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub | gpg --dearmor -o /etc/apt/keyrings/nvidia-container-toolkit-keyring.gpg
+RUN echo "deb [signed-by=/etc/apt/keyrings/nvidia-container-toolkit-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" | tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libnvinfer-dev \
     libnccl-dev \
     libnv-compute-dev \
@@ -18,10 +27,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurand-dev \
     libnpp-dev \
     cuda-toolkit-12-2 \
+    ttf-dejavu \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Establecer el directorio de trabajo
+# Vuelve a cambiar al usuario runpod.
+USER runpod
+
+# Establece el directorio de trabajo.
 WORKDIR /workspace
 
 # Clonar nodos personalizados
