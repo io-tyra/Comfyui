@@ -4,34 +4,57 @@ FROM runpod/worker-comfyui:5.4.1-base
 # Cambia al usuario 'root' para obtener los permisos necesarios.
 USER root
 
-# Actualiza la lista de paquetes y luego instala las dependencias.
+# Actualiza la lista de paquetes e instala dependencias básicas
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     zip \
     unzip \
     rar \
+    libnvinfer9 \
+    libnccl2 \
+    libcublas12 \
+    libcusparse12 \
+    libcufft12 \
+    libcurand12 \
+    libnpp12 \
+    cuda-toolkit-12-4
+
+# Instala paquetes de desarrollo separadamente
+RUN apt-get install -y --no-install-recommends \
     libnvinfer-dev \
     libnccl-dev \
-    libnv-compute-dev \
-    libcublas-dev \
-    libcusparse-dev \
-    libcufft-dev \
-    libcurand-dev \
-    libnpp-dev \
-    cuda-toolkit-12-2
+    libcublas-dev-12-4 \
+    libcusparse-dev-12-4 \
+    libcufft-dev-12-4 \
+    libcurand-dev-12-4 \
+    libnpp-dev-12-4
 
-# Agrega la ruta de binarios de CUDA al PATH para que 'nvcc' se encuentre.
+# Agrega la ruta de binarios de CUDA al PATH
 ENV PATH="/usr/local/cuda/bin:${PATH}"
+ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 
 # --- Nodos personalizados ---
 RUN git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git /workspace/ComfyUI/custom_nodes/ComfyUI-mxToolkit
+
 # Se clona el repositorio de SageAttention y luego se instala en un paso separado.
-RUN git clone https://github.com/thu-ml/SageAttention.git /workspace/ComfyUI/custom_nodes/SageAttention && cd /workspace/ComfyUI/custom_nodes/SageAttention && pip install .
-RUN git clone https://github.com/Yarvix/ComfyUI-YarvixPA.git /workspace/ComfyUI/custom_nodes/ComfyUI-YarvixPA && pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI-YarvixPA/requirements.txt
-RUN git clone https://github.com/WASasquatch/was-node-suite-comfyui.git /workspace/ComfyUI/custom_nodes/was-node-suite-comfyui && pip install -r /workspace/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
-RUN git clone https://github.com/diogod/ComfyUI_ChatterBox_SRT_Voice.git /workspace/ComfyUI/custom_nodes/ComfyUI_ChatterBox_SRT_Voice && pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI_ChatterBox_SRT_Voice/requirements.txt
-RUN git clone https://github.com/Zehong-Ma/ComfyUI-MagCache.git /workspace/ComfyUI/custom_nodes/ComfyUI-MagCache && pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI-MagCache/requirements.txt
-RUN git clone https://github.com/Academiasd/comfyui_AcademiaSD.git /workspace/ComfyUI/custom_nodes/comfyui_AcademiaSD && pip install -r /workspace/ComfyUI/custom_nodes/comfyui_AcademiaSD/requirements.txt
+RUN git clone https://github.com/thu-ml/SageAttention.git /workspace/ComfyUI/custom_nodes/SageAttention && \
+    cd /workspace/ComfyUI/custom_nodes/SageAttention && \
+    pip install .
+
+RUN git clone https://github.com/Yarvix/ComfyUI-YarvixPA.git /workspace/ComfyUI/custom_nodes/ComfyUI-YarvixPA && \
+    pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI-YarvixPA/requirements.txt
+
+RUN git clone https://github.com/WASasquatch/was-node-suite-comfyui.git /workspace/ComfyUI/custom_nodes/was-node-suite-comfyui && \
+    pip install -r /workspace/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
+
+RUN git clone https://github.com/diogod/ComfyUI_ChatterBox_SRT_Voice.git /workspace/ComfyUI/custom_nodes/ComfyUI_ChatterBox_SRT_Voice && \
+    pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI_ChatterBox_SRT_Voice/requirements.txt
+
+RUN git clone https://github.com/Zehong-Ma/ComfyUI-MagCache.git /workspace/ComfyUI/custom_nodes/ComfyUI-MagCache && \
+    pip install -r /workspace/ComfyUI/custom_nodes/ComfyUI-MagCache/requirements.txt
+
+RUN git clone https://github.com/Academiasd/comfyui_AcademiaSD.git /workspace/ComfyUI/custom_nodes/comfyui_AcademiaSD && \
+    pip install -r /workspace/ComfyUI/custom_nodes/comfyui_AcademiaSD/requirements.txt
 
 # --- Modelos y LoRAs ---
 # Checkpoints SD15
@@ -58,3 +81,6 @@ RUN comfy model download --url https://civitai.com/api/download/models/671139 --
 
 # Archivo de audio (se descarga en la carpeta input)
 RUN comfy model download --url https://huggingface.co/datasets/x0io0x/EOR/resolve/main/Eye%20On%20The%20Road.wav --relative-path input --filename EyeOnTheRoad.wav
+
+# Vuelve al usuario por defecto para seguridad
+USER runpod
