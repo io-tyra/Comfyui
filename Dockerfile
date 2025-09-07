@@ -15,9 +15,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     rar \
     wget
-RUN curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub | gpg --dearmor -o /etc/apt/keyrings/nvidia-container-toolkit-keyring.gpg
-RUN echo "deb [signed-by=/etc/apt/keyrings/nvidia-container-toolkit-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" | tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-RUN apt-get update && apt-get install -y --no-install-recommends \
     libnvinfer-dev \
     libnccl-dev \
     libnv-compute-dev \
@@ -87,3 +84,4 @@ EXPOSE 3000
 
 # Comando de inicio para RunPod serverless
 CMD ["python", "-u", "/workspace/ComfyUI/main.py", "--listen", "0.0.0.0", "--port", "3000"]
+
