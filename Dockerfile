@@ -1,10 +1,6 @@
 # Usa la imagen base oficial de ComfyUI de RunPod.
 FROM runpod/worker-comfyui:5.4.1-base
 
-# Crear el usuario runpod con el UID esperado
-RUN useradd -m -u 1000 -s /bin/bash runpod && \
-    chown -R runpod:runpod /workspace
-
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
@@ -24,9 +20,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cuda-toolkit-12-2 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-# Cambiar al usuario runpod
-USER runpod
 
 # Establecer el directorio de trabajo
 WORKDIR /workspace
