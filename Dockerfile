@@ -40,9 +40,11 @@ WORKDIR /app/ComfyUI
 
 # Create directories and download models and audio file
 
-# Input Audio File (with improved wget command)
+# ---- LÍNEA CORREGIDA ----
+# Input Audio File (CORREGIDO: Usando curl para seguir redirecciones de forma más robusta)
 RUN mkdir -p /app/ComfyUI/input && \
-    wget --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36" -O /app/ComfyUI/input/"Eye On The Road.wav" "https://huggingface.co/datasets/x0io0x/EOR/resolve/main/Eye%20On%20The%20Road.wav"
+    curl -L -o /app/ComfyUI/input/"Eye On The Road.wav" "https://huggingface.co/datasets/x0io0x/EOR/resolve/main/Eye%20On%20The%20Road.wav"
+# -------------------------
 
 # Checkpoints
 RUN mkdir -p /app/ComfyUI/models/checkpoints/SD15 && \
