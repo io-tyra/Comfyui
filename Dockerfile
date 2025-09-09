@@ -63,7 +63,3 @@ RUN mkdir -p /app/ComfyUI/models/motion_lora && \
     curl -L -o /app/ComfyUI/models/motion_lora/v2_lora_ZoomIn.ckpt "https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_ZoomIn.ckpt" && \
     curl -L -o /app/ComfyUI/models/motion_lora/"aidma-RUN-Motion Lora.safetensors" "https://civitai.com/api/download/models/529725?type=Model&format=SafeTensor" && \
     curl -L -o /app/ComfyUI/models/motion_lora/lightningMotionLora_thunderStrike.safetensors "https://civitai.com/api/download/models/671139?type=Model&format=SafeTensor"
-
-# RIFE Models for Frame Interpolation (Link Verificado)
-RUN mkdir -p /app/ComfyUI/models/rife && \
-    curl -L -o /app/ComfyUI/models/rife/rife47.pth "https://huggingface.co/hzwer/rife-v4.7/resolve/main/rife_v4.7_large_model.pth?download=true"
