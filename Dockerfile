@@ -33,7 +33,6 @@ RUN \
     # Second, after all clones are complete, install all requirements
     pip install -r /app/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt && \
     pip install -r /app/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt && \
-    pip install -r /app/ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved/requirements.txt && \
     pip install -r /app/ComfyUI/custom_nodes/ComfyUI_Yvann-Nodes/requirements.txt
 
 # --- Download all models and files ---
@@ -65,3 +64,4 @@ RUN mkdir -p /app/ComfyUI/models/motion_lora && \
     curl -L -o /app/ComfyUI/models/motion_lora/v2_lora_ZoomIn.ckpt "https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_ZoomIn.ckpt" && \
     curl -L -o /app/ComfyUI/models/motion_lora/"aidma-RUN-Motion Lora.safetensors" "https://civitai.com/api/download/models/529725?type=Model&format=SafeTensor" && \
     curl -L -o /app/ComfyUI/models/motion_lora/lightningMotionLora_thunderStrike.safetensors "https://civitai.com/api/download/models/671139?type=Model&format=SafeTensor"
+
