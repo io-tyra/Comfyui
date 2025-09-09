@@ -46,17 +46,17 @@ RUN mkdir -p /app/ComfyUI/input && \
 
 # Checkpoints
 RUN mkdir -p /app/ComfyUI/models/checkpoints/SD15
-RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/realisticVision.safetensors "https://civitai.com/api/download/models/503725?type=Model&format=SafeTensor&size=pruned&fp=fp16"
-RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/dreamshaper.safetensors "https://civitai.com/api/download/models/237459?type=Model&format=SafeTensor&size=pruned&fp=fp16"
-RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/juggernaut.safetensors "https://civitai.com/api/download/models/173821?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/atomixSD15_v40.safetensors "https://civitai.com/api/download/models/503725?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/darksun_v7b.safetensors "https://civitai.com/api/download/models/237459?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/mixCyber_noEma.safetensors "https://civitai.com/api/download/models/173821?type=Model&format=SafeTensor&size=pruned&fp=fp16"
 
 # LoRAs
 RUN mkdir -p /app/ComfyUI/models/loras/SD15
-RUN curl -L -o /app/ComfyUI/models/loras/SD15/epiNoiseoffset.safetensors "https://civitai.com/api/download/models/175276?type=Model&format=SafeTensor"
+RUN curl -L -o /app/ComfyUI/models/loras/SD15/CyberpunkWorld.safetensors "https://civitai.com/api/download/models/175276?type=Model&format=SafeTensor"
 RUN curl -L -o /app/ComfyUI/models/loras/SD15/add-detail.safetensors "https://civitai.com/api/download/models/87153?type=Model&format=SafeTensor"
-RUN curl -L -o /app/ComfyUI/models/loras/SD15/xl-more-art.safetensors "https://civitai.com/api/download/models/87191?type=Model&format=SafeTensor"
+RUN curl -L -o /app/ComfyUI/models/loras/SD15/Glitching.safetensors "https://civitai.com/api/download/models/87191?type=Model&format=SafeTensor"
 RUN curl -L -o /app/ComfyUI/models/loras/SD15/v3_sd15_adapter.ckpt "https://huggingface.co/guoyww/animatediff/resolve/main/v3_sd15_adapter.ckpt"
-RUN curl -L -o /app/ComfyUI/models/loras/SD15/DetailTweaker.safetensors "https://civitai.com/api/download/models/571916?type=Model&format=SafeTensor"
+RUN curl -L -o /app/ComfyUI/models/loras/SD15/Hyper-SD15-12steps-CFG-lora.safetensors "https://civitai.com/api/download/models/571916?type=Model&format=SafeTensor"
 RUN curl -L -o /app/ComfyUI/models/loras/SD15/emma15.safetensors "https://huggingface.co/datasets/x0io0x/EOR/resolve/main/emma15.safetensors"
 RUN curl -L -o /app/ComfyUI/models/loras/SD15/tyrana20.safetensors "https://huggingface.co/datasets/x0io0x/EOR/resolve/main/tyrana20.safetensors"
 
@@ -67,9 +67,10 @@ RUN curl -L -o /app/ComfyUI/models/animatediff_models/mm_sd_v15_v2.ckpt "https:/
 # Motion LoRA
 RUN mkdir -p /app/ComfyUI/models/motion_lora
 RUN curl -L -o /app/ComfyUI/models/motion_lora/v2_lora_ZoomIn.ckpt "https://huggingface.co/guoyww/animatediff/resolve/main/v2_lora_ZoomIn.ckpt"
-RUN curl -L -o /app/ComfyUI/models/motion_lora/CameraControl.safetensors "https://civitai.com/api/download/models/529725?type=Model&format=SafeTensor"
-RUN curl -L -o /app/ComfyUI/models/motion_lora/PanLeft.safetensors "https://civitai.com/api/download/models/671139?type=Model&format=SafeTensor"
+RUN curl -L -o /app/ComfyUI/models/motion_lora/aidma-RUN-Motion Lora.safetensors "https://civitai.com/api/download/models/529725?type=Model&format=SafeTensor"
+RUN curl -L -o /app/ComfyUI/models/motion_lora/lightningMotionLora_thunderStrike.safetensors "https://civitai.com/api/download/models/671139?type=Model&format=SafeTensor"
 
 # RIFE Models for Frame Interpolation
 RUN mkdir -p /app/ComfyUI/models/rife
 RUN curl -L -o /app/ComfyUI/models/rife/rife47.pth "https://huggingface.co/hithereai/rife-v4.7/resolve/main/rife47.pth"
+
