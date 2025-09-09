@@ -16,20 +16,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Set environment variable to prevent git from prompting for credentials
 ENV GIT_TERMINAL_PROMPT=0
 
-# Clone all required custom nodes repositories, specifying the full destination path
-RUN git clone https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved.git /app/ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved
-RUN git clone https://github.com/yvann-ba/ComfyUI_Yvann-Nodes.git /app/ComfyUI/custom_nodes/ComfyUI_Yvann-Nodes
-RUN git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git /app/ComfyUI/custom_nodes/ComfyUI-VideoHelperSuite
-RUN git clone https://github.com/FizzleDorf/ComfyUI_FizzNodes.git /app/ComfyUI/custom_nodes/ComfyUI_FizzNodes
-RUN git clone https://github.com/rgthree/rgthree-comfy.git /app/ComfyUI/custom_nodes/rgthree-comfy
-RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /app/ComfyUI/custom_nodes/ComfyUI-Impact-Pack
-RUN git clone https://github.com/Kijai/ComfyUI-KJNodes.git /app/ComfyUI/custom_nodes/ComfyUI-KJNodes
-RUN git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git /app/ComfyUI/custom_nodes/ComfyUI-Frame-Interpolation
-RUN git clone https://github.com/WASasquatch/was-node-suite-comfyui.git /app/ComfyUI/custom_nodes/was-node-suite-comfyui
-RUN git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git /app/ComfyUI/custom_nodes/ComfyUI-Custom-Scripts
-
-# Install ALL Python dependencies from the custom nodes that require them
-RUN pip install -r /app/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt && \
+# Clone all nodes and install their requirements in a single, sequential step to prevent race conditions
+RUN \
+    # First, clone all repositories sequentially
+    git clone https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved.git /app/ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved && \
+    git clone https://github.com/yvann-ba/ComfyUI_Yvann-Nodes.git /app/ComfyUI/custom_nodes/ComfyUI_Yvann-Nodes && \
+    git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git /app/ComfyUI/custom_nodes/ComfyUI-VideoHelperSuite && \
+    git clone https://github.com/FizzleDorf/ComfyUI_FizzNodes.git /app/ComfyUI/custom_nodes/ComfyUI_FizzNodes && \
+    git clone https://github.com/rgthree/rgthree-comfy.git /app/ComfyUI/custom_nodes/rgthree-comfy && \
+    git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /app/ComfyUI/custom_nodes/ComfyUI-Impact-Pack && \
+    git clone https://github.com/Kijai/ComfyUI-KJNodes.git /app/ComfyUI/custom_nodes/ComfyUI-KJNodes && \
+    git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git /app/ComfyUI/custom_nodes/ComfyUI-Frame-Interpolation && \
+    git clone https://github.com/WASasquatch/was-node-suite-comfyui.git /app/ComfyUI/custom_nodes/was-node-suite-comfyui && \
+    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git /app/ComfyUI/custom_nodes/ComfyUI-Custom-Scripts && \
+    \
+    # Second, after all clones are complete, install all requirements
+    pip install -r /app/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt && \
     pip install -r /app/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt && \
     pip install -r /app/ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved/requirements.txt && \
     pip install -r /app/ComfyUI/custom_nodes/ComfyUI_Yvann-Nodes/requirements.txt
