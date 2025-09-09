@@ -65,3 +65,4 @@ RUN mkdir -p /app/ComfyUI/models/motion_lora && \
     curl -L -o /app/ComfyUI/models/motion_lora/"aidma-RUN-Motion Lora.safetensors" "https://civitai.com/api/download/models/529725?type=Model&format=SafeTensor" && \
     curl -L -o /app/ComfyUI/models/motion_lora/lightningMotionLora_thunderStrike.safetensors "https://civitai.com/api/download/models/671139?type=Model&format=SafeTensor"
 
+
