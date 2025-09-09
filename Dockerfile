@@ -46,8 +46,8 @@ RUN mkdir -p /app/ComfyUI/input && \
 
 # Checkpoints
 RUN mkdir -p /app/ComfyUI/models/checkpoints/SD15
-RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/atomixSD15_v40.safetensors "https://civitai.com/api/download/models/503725?type=Model&format=SafeTensor&size=pruned&fp=fp16"
-RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/darksun_v7b.safetensors "https://civitai.com/api/download/models/237459?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+#RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/atomixSD15_v40.safetensors "https://civitai.com/api/download/models/503725?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+#RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/darksun_v7b.safetensors "https://civitai.com/api/download/models/237459?type=Model&format=SafeTensor&size=pruned&fp=fp16"
 RUN curl -L -o /app/ComfyUI/models/checkpoints/SD15/mixCyber_noEma.safetensors "https://civitai.com/api/download/models/173821?type=Model&format=SafeTensor&size=pruned&fp=fp16"
 
 # LoRAs
@@ -71,6 +71,7 @@ RUN curl -L -o /app/ComfyUI/models/motion_lora/aidma-RUN-Motion Lora.safetensors
 RUN curl -L -o /app/ComfyUI/models/motion_lora/lightningMotionLora_thunderStrike.safetensors "https://civitai.com/api/download/models/671139?type=Model&format=SafeTensor"
 
 # RIFE Models for Frame Interpolation
-RUN mkdir -p /app/ComfyUI/models/rife
-RUN curl -L -o /app/ComfyUI/models/rife/rife47.pth "https://huggingface.co/hithereai/rife-v4.7/resolve/main/rife47.pth"
+#RUN mkdir -p /app/ComfyUI/models/rife
+#RUN curl -L -o /app/ComfyUI/models/rife/rife47.pth "https://huggingface.co/hithereai/rife-v4.7/resolve/main/rife47.pth"
+
 
