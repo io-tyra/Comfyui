@@ -17,26 +17,30 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ENV GIT_TERMINAL_PROMPT=0
 
 # Switch to the custom_nodes directory
-WORKDIR /app/ComfyUI/custom_nodes
+#WORKDIR /app/ComfyUI/custom_nodes
 
 # Clone required custom nodes repositories individually
-RUN git clone https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved.git
-RUN git clone https://github.com/yvann-ba/ComfyUI_Yvann-Nodes.git
-RUN git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
-RUN git clone https://github.com/FizzleDorf/ComfyUI_FizzNodes.git
-RUN git clone https://github.com/rgthree/rgthree-comfy.git
-RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git
-RUN git clone https://github.com/Kijai/ComfyUI-KJNodes.git
-RUN git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git
-RUN git clone https://github.com/WASasquatch/was-node-suite-comfyui.git
-RUN git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git
+RUN git clone https://github.com/Kosinkadink/ComfyUI-AnimateDiff-Evolved.git /app/ComfyUI/custom_nodes/ComfyUI-AnimateDiff-Evolved
+RUN git clone https://github.com/yvann-ba/ComfyUI_Yvann-Nodes.git /app/ComfyUI/custom_nodes/ComfyUI_Yvann-Nodes
+RUN git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git /app/ComfyUI/custom_nodes/ComfyUI-VideoHelperSuite
+RUN git clone https://github.com/FizzleDorf/ComfyUI_FizzNodes.git /app/ComfyUI/custom_nodes/ComfyUI_FizzNodes
+RUN git clone https://github.com/rgthree/rgthree-comfy.git /app/ComfyUI/custom_nodes/rgthree-comfy
+RUN git clone https://github.com/ltdrdata/ComfyUI-Impact-Pack.git /app/ComfyUI/custom_nodes/ComfyUI-Impact-Pack
+RUN git clone https://github.com/Kijai/ComfyUI-KJNodes.git /app/ComfyUI/custom_nodes/ComfyUI-KJNodes
+RUN git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git /app/ComfyUI/custom_nodes/ComfyUI-Frame-Interpolation
+RUN git clone https://github.com/WASasquatch/was-node-suite-comfyui.git /app/ComfyUI/custom_nodes/was-node-suite-comfyui
+RUN git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git /app/ComfyUI/custom_nodes/ComfyUI-Custom-Scripts
 
 # Install Python dependencies for the custom nodes
-RUN pip install -r ComfyUI-Impact-Pack/requirements.txt && \
-    pip install -r was-node-suite-comfyui/requirements.txt
+#RUN pip install -r ComfyUI-Impact-Pack/requirements.txt && \
+#    pip install -r was-node-suite-comfyui/requirements.txt
+
+# Instala las dependencias de Python usando la ruta completa y correcta
+RUN pip install -r /app/ComfyUI/custom_nodes/ComfyUI-Impact-Pack/requirements.txt && \
+    pip install -r /app/ComfyUI/custom_nodes/was-node-suite-comfyui/requirements.txt
 
 # Return to the main ComfyUI directory
-WORKDIR /app/ComfyUI
+#WORKDIR /app/ComfyUI
 
 # --- Download all models and files in separate, robust steps using curl ---
 
@@ -73,5 +77,6 @@ RUN curl -L -o /app/ComfyUI/models/motion_lora/lightningMotionLora_thunderStrike
 # RIFE Models for Frame Interpolation
 #RUN mkdir -p /app/ComfyUI/models/rife
 #RUN curl -L -o /app/ComfyUI/models/rife/rife47.pth "https://huggingface.co/hithereai/rife-v4.7/resolve/main/rife47.pth"
+
 
 
